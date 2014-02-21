@@ -1,5 +1,5 @@
 {
-    "name": "skimia/angular",
+    "name": "skimia/angular-bundle",
     "type": "symfony-bundle",
     "description": "Skimia Angular bundle",
     "keywords": ["user"],

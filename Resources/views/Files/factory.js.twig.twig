@@ -1,0 +1,6 @@
+{{'{{ module_var }}'}}.factory('{{plurialise(name)}}', ['$resource',
+	function($resource){
+		return $resource('api/{{plurialise(name)|lower}}/:{{name|lower}}Id.json', { {{name|lower}}Id: "@id"}, {
+
+		});
+	}]);

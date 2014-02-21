@@ -1,0 +1,36 @@
+parameters:
+#    skimia_angular.example.class: Skimia\AngularBundle\Example
+
+services:
+    skimia_angular.bundle_manager:
+        class: Skimia\AngularBundle\Components\BundleManager\BundleManager
+        arguments: ["@kernel", "%skimia_angular.global_config%", "%skimia_angular.bundle_config%"]
+    
+    skimia_angular.twig.html_helpers:
+        class: Skimia\AngularBundle\Components\TwigServices\HtmlHelpers
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+            
+    skimia_angular.routing.router:
+        class: Skimia\AngularBundle\Components\RoutingManager\RouterGenerator
+        arguments: [@service_container]
+        
+    skimia_angular.javascript_generator:
+        class: Skimia\AngularBundle\Components\JavascriptGenerator\AngularBaseGenerator
+        arguments: [@service_container]
+        
+    skimia_angular.dependency_manager:
+        class: Skimia\AngularBundle\Components\FileGenerator\DependencyManager
+        arguments: [@kernel,@templating]
+
+    skimia_angular.main_generator:
+        class: Skimia\AngularBundle\Components\FileGenerator\MainGenerator
+        arguments: [@service_container]
+        
+        
+        
+    skimia_angular.form.type.multiselect:
+        class: Skimia\AngularBundle\Form\Type\MultiSelectType
+        tags:
+            - { name: form.type, alias: multiselect }

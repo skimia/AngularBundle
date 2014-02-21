@@ -1,0 +1,1 @@
+var {{module_name(short_name,name,true)}} = angular.module('{{module_name(short_name,name)}}',[{{'{% for dep in deps %}\'{{dep|raw}}\'{%if not loop.last %},{%endif%}{%endfor%}'}}]);

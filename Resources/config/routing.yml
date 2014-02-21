@@ -1,0 +1,9 @@
+skimia_angular_get_partial:
+    pattern:  /partials/{bundle}/{path}.html
+    defaults: { _controller: SkimiaAngularBundle:Partials:getPartial }
+    requirements:
+        path: ".+"
+        
+skimia_angular_get_app:
+    pattern:  /app.js
+    defaults: { _controller: SkimiaAngularBundle:Javascript:home }

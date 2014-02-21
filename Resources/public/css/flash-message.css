@@ -1,0 +1,30 @@
+#mc-messages-wrapper {
+  z-index: 99;
+  position: fixed;
+  display: inline-block;
+  text-align: center;
+  top: 50px;
+  right: 30px;
+}
+#mc-messages-wrapper .alert-box{
+    opacity: 0.5;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+#mc-messages-wrapper .alert-box:hover{
+    opacity: 1;
+}
+
+.flash-animate.ng-enter ,.flash-animate.ng-leave.ng-leave-active {
+ -webkit-transition: 0.5s linear all !important; /* Safari/Chrome */
+ transition: 0.5s linear all !important; /* All other modern browsers and IE10+ */
+ 
+ /* The animation preparation code */
+ opacity: 0 !important;
+}
+ 
+.flash-animate.ng-leave,.flash-animate.ng-enter.ng-enter-active {
+ /* The animation code itself */
+ opacity: 0.5 !important;
+}

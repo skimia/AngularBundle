@@ -1,0 +1,14 @@
+
+/* DEPENDENCES ************/
+{% for file in files %}
+{{file|raw}};
+
+{% endfor %}
+/* MODULE *****************/
+angular.module('{{app_name()}}', [{% for dep in deps %}'{{dep|raw}}'{%if not loop.last %},{%endif%}{%endfor%}])
+    .run(
+        [ '$rootScope', '$state', '$stateParams',
+        function ($rootScope,   $state,   $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+    }]);

@@ -1,0 +1,25 @@
+{
+    "name": "skimia/angular",
+    "type": "symfony-bundle",
+    "description": "Skimia Angular bundle",
+    "keywords": ["user"],
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Skimia Agency",
+            "email": "contact@skimia-agency.com",
+            "homepage": "http://www.skimia-agency.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle":         "*",
+        "twig/twig":                        "*",
+        "doctrine/doctrine-bundle":         "*"
+    },
+    "autoload": {
+        "psr-0": { "Skimia\\AngularBundle": "" }
+    },
+    "target-dir": "Skimia/AngularBundle",
+    "minimum-stability": "dev"
+}

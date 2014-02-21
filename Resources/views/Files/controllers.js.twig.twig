@@ -1,0 +1,40 @@
+
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ListController',['$scope','{{plurialise(name)}}',function($scope, {{plurialise(name)}}){
+	$scope.{{plurialise(name)|lower}} = {{plurialise(name)}}.query();
+}]);
+
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ShowController',['$scope','$stateParams','{{plurialise(name)}}',function($scope, $stateParams, {{plurialise(name)}}){
+	$scope.{{name|lower}} = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.Id});
+}]);
+
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.EditController',['$scope','$stateParams', '$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
+	$scope.data = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.Id});
+        $scope.submit = function(){
+            $scope.data.$save(function()
+                {
+                    $state.go('^.show',{Id:$scope.data.id},{'reload':true});
+                    flash.add('success','Message success Edit');
+                });
+        }
+}]);
+
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.CreateController',['$scope','$stateParams','$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
+	$scope.data = {}
+        $scope.submit = function(){
+           var saved = {{plurialise(name)}}.save($scope.data,function()
+                {
+                    $state.go('^.show',{Id:saved.id});
+                    flash.add('success','Message success Create');
+                }
+            );
+        }
+}]);
+
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.DeleteController',['$scope','$stateParams','$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
+    {{plurialise(name)}}.delete({ {{name|lower}}Id:$stateParams.Id},function()
+                {
+                    $state.go('^.list');
+                    flash.add('success','Message success Delete');
+                });
+}]);
+

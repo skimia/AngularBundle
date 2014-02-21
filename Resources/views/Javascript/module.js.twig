@@ -1,0 +1,14 @@
+
+/* DEPENDENCES ************/
+{% for file in deps %}
+{{file|raw}};
+
+{% endfor %}
+/* MODULE *****************/
+{{module|raw}}
+
+/* FILES ******************/
+{% for file in files %}
+{{file|raw}};
+
+{% endfor %}

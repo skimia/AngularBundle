@@ -1,0 +1,51 @@
+{# This is an extension of Twig Form Theme #}
+{# We redefine form elements, so they are binded with Angular model #}
+ 
+{% extends "form_div_layout.html.twig" %}
+ 
+{# Make data available to current scope as $scope.data - will not work with hidden fields #}
+{% block widget_attributes %}
+    {% spaceless %}
+        ng-model="data['{{ full_name }}']" {# we add Angular ng-model #}
+        id="{{ id }}" name="{{ full_name }}"{% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}
+        {% for attrname, attrvalue in attr %}{% if attrname in ['placeholder', 'title'] %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}" {% else %}{{ attrname }}="{{ attrvalue }}" {% endif %}{% endfor %}
+    {% endspaceless %}
+{% endblock widget_attributes %}
+ 
+{# current controller submit() will called, instead of submitting the form #}
+{% block form_start %}
+    {% spaceless %}
+        {% set method = method|upper %}
+        {% if method in ["GET", "POST"] %}
+            {% set form_method = method %}
+        {% else %}
+            {% set form_method = "POST" %}
+        {% endif %}
+        <form name="{{ form.vars.name }}" ng-submit="submit()" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        {% if form_method != method %}
+            <input type="hidden" name="_method" value="{{ method }}" />
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_start %}
+            
+            
+{% block multiselect_widget %}
+    {% spaceless %}
+            {% if not hide %}
+            <multi-select 
+                ng-init="data.{{name}} = []"
+                ng-model="data.{{name}}" 
+                available="{{name}}" 
+                selected-label="{{label}} Actuels" 
+                available-label="{{label}} Disponibles" 
+                display-attr="{{property}}">
+
+            </multi-select>
+            {% endif %}
+    {% endspaceless %}
+{% endblock %}
+{% block multiselect_label %}
+    {% spaceless %}
+            
+    {% endspaceless %}
+{% endblock %}

@@ -61,18 +61,63 @@ class SkimiaAngularExtension extends Extension
         $config_routes = array();
         foreach ($value as $key=>$routed) {
             $path = $kernel->locateResource($routed['resource']);
-            $routes = $yaml->parse(file_get_contents($path));
-            foreach ($routes as $name=>$route) {
-                if(isset($routed['prefix'])){
-                    $route['prefix'] = $routed['prefix'];
+            //foreach all files
+            $files = $this->getDirectory($path,$path.DIRECTORY_SEPARATOR);
+            foreach ($files as $conf) {
+                $routes = $yaml->parse(file_get_contents($conf));
+                foreach ($routes as $name=>$route) {
+                    if(isset($routed['prefix'])){
+                        $route['prefix'] = $routed['prefix'];
+                    }
+                    $route['name'] = $name;
+                    if(isset($config_routes[$name])){
+                        throw new \Exception('Duplicate entry in routing Angular for key'.$name);
+                    }
+                    $config_routes[$name] = $route;
                 }
-                $route['name'] = $name;
-                if(isset($config_routes[$name])){
-                    throw new \Exception('Duplicate entry in routing Angular for key'.$name);
-                }
-                $config_routes[$name] = $route;
             }
+            
         }
         return  $config_routes;
     }
+    protected function getDirectory( $path = '.',$prefix='' ){ 
+
+    $ignore = array( 'cgi-bin', '.', '..', 'module.js.twig','.svn' ); 
+    // Directories to ignore when listing output. Many hosts 
+    // will deny PHP access to the cgi-bin. 
+
+    $files = array();
+    $dh = @opendir( $path ); 
+    // Open the directory to the handle $dh 
+    
+    while( false !== ( $file = readdir( $dh ) ) ){ 
+    // Loop through the directory 
+     
+        if( !in_array( $file, $ignore ) ){ 
+        // Check that this file is not to be ignored 
+             
+            // Just to add spacing to the list, to better 
+            // show the directory tree. 
+             
+            if( is_dir( "$path/$file" ) ){ 
+            // Its a directory, so we need to keep reading down... 
+                
+                $files = array_merge($files,$this->getDirectory( "$path/$file",$prefix.$file.'/' )); 
+                // Re-call this same function but on a new directory. 
+                // this is what makes function recursive. 
+             
+            } else { 
+                $files[] = $prefix.$file;
+                // Just print out the filename 
+             
+            } 
+         
+        } 
+     
+    } 
+     
+    closedir( $dh ); 
+    // Close the directory handle 
+    return $files;
+} 
 }

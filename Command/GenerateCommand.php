@@ -47,6 +47,8 @@ class GenerateCommand extends ContainerAwareCommand {
     }
 
     protected function generateController(\Skimia\AngularBundle\Components\BundleManager\Bundle $bundle, \FOS\RestBundle\Controller\FOSRestController $controller) {
+        global $kernel;
+        
         $name = str_replace('Controller', '', $this->get_real_class($controller));
         $this->_output->writeln(' Controller : ' . $name);
         $directory = $bundle->getResourcePath();
@@ -75,11 +77,25 @@ class GenerateCommand extends ContainerAwareCommand {
             $this->generateViewList($bundle->getName(), $name, $directory . 'partials' . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'show.html.twig');
         }
         //Check Routing
+        $dir_config = $kernel->getBundle($bundle->getName())->getPath().DIRECTORY_SEPARATOR."Resources".DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR."angular_routing";
+        if (!file_exists($dir_config . DIRECTORY_SEPARATOR . strtolower($name) . '.yml')) {
+            $this->_output->writeln('   > Generate Routing ' . strtolower($name) . '.yml');
+            $this->generateRouting($name,$bundle, $dir_config . DIRECTORY_SEPARATOR . strtolower($name) . '.yml');
+        }
     }
 
     protected function generateControllerJs($name, $path) {
         $file = $this->getContainer()->get('templating')->render('SkimiaAngularBundle:Files:controllers.js.twig.twig', array(
             'name' => $name
+                )
+        );
+        file_put_contents($path, $file);
+    }
+    
+    protected function generateRouting($name,$bundle, $path) {
+        $file = $this->getContainer()->get('templating')->render('SkimiaAngularBundle:Files:routing.yml.twig', array(
+            'name' => $name,
+            'bundle'=>$bundle
                 )
         );
         file_put_contents($path, $file);

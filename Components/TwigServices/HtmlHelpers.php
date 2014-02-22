@@ -25,6 +25,9 @@ class HtmlHelpers extends \Twig_Extension{
             'adapt_angular'=> new \Twig_Function_Method($this,'adaptName',array(
                 'is_safe' => array('html')
             )),
+            'app_javascript'=> new \Twig_Function_Method($this,'appJavascript',array(
+                'is_safe' => array('html')
+            )),
             'get_form' => new \Twig_Function_Method($this, 'getForm',array(
                 'is_safe' => array('html')
             )),
@@ -46,6 +49,14 @@ class HtmlHelpers extends \Twig_Extension{
         return $this->container->getParameter('skimia_angular.global_config')['app_name'];
     }
     
+    public function appJavascript(){
+    	if(in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev'))) {
+  			$url = $this->container->get('router')->generate('skimia_angular_get_app');
+		}else{
+			$url ="app.js";
+		}
+		return '<script type="text/javascript" src="'.$url.'" ></script>';
+    }
     public function moduleName($bundleName,$module,$concat = false){
         $bundleManager = $this->container->get('skimia_angular.bundle_manager');
         if($bundleManager->hasBundle($bundleName)){

@@ -4,11 +4,11 @@
 }]);
 
 {{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ShowController',['$scope','$stateParams','{{plurialise(name)}}',function($scope, $stateParams, {{plurialise(name)}}){
-	$scope.{{name|lower}} = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.Id});
+	$scope.{{name|lower}} = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.{{name|lower}}Id});
 }]);
 
 {{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.EditController',['$scope','$stateParams', '$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
-	$scope.data = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.Id});
+	$scope.data = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.{{name|lower}}Id});
         $scope.submit = function(){
             $scope.data.$save(function()
                 {
@@ -31,7 +31,7 @@
 }]);
 
 {{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.DeleteController',['$scope','$stateParams','$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
-    {{plurialise(name)}}.delete({ {{name|lower}}Id:$stateParams.Id},function()
+    {{plurialise(name)}}.delete({ {{name|lower}}Id:$stateParams.{{name|lower}}Id},function()
                 {
                     $state.go('^.list');
                     flash.add('success','Message success Delete');

@@ -15,19 +15,19 @@
     title: "CREATE {{name}}"
     
 {{bundle.shortName|lower}}_{{name|lower}}_show:
-    pattern: /{{name|lower}}/:Id
+    pattern: /{{name|lower}}/:{{name|lower}}Id
     controller: "{{bundle.shortName}}.{{name}}.ShowController" 
     view: "@{{bundle.name}}:{{name}}:show.html.twig"
     title: "SHOW {{name}} "
     
 {{bundle.shortName|lower}}_{{name|lower}}_edit:
-    pattern: /{{name|lower}}/:Id/edit
+    pattern: /{{name|lower}}/:{{name|lower}}Id/edit
     controller: "{{bundle.shortName}}.{{name}}.EditController" 
     view: "@{{bundle.name}}:{{name}}:form.html.twig"
     title: "EDIT {{name}}"
     
 {{bundle.shortName|lower}}_{{name|lower}}_delete:
-    pattern: /{{name|lower}}/:Id/delete
+    pattern: /{{name|lower}}/:{{name|lower}}Id/delete
     controller: "{{bundle.shortName}}.{{name}}.DeleteController" 
     view: "@{{bundle.name}}:{{name}}:show.html.twig"
     title: "DELETE {{name}}"

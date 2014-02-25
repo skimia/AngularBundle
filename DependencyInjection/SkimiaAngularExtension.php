@@ -28,7 +28,7 @@ class SkimiaAngularExtension extends Extension
         $this->loadBundle($config, $container);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $container->setParameter('skimia_angular.config_routes',$this->loadRouting());
+        $container->setParameter('skimia_angular.config_routes',$this->loadRouting($container));
     }
     
     public function loadBundle(array $verifiedConfigs, ContainerBuilder $container)
@@ -52,8 +52,9 @@ class SkimiaAngularExtension extends Extension
         $container->setParameter('skimia_angular.bundle_config', $configs);
     }
     
-    public function loadRouting()
+    public function loadRouting($container)
     {
+        $bundles = $container->getParameter('skimia_angular.bundle_config');
         global $kernel;
         $path = $kernel->getRootDir().'/config/angular_routing.yml';
         $yaml = new Parser();
@@ -61,6 +62,9 @@ class SkimiaAngularExtension extends Extension
         $config_routes = array();
         foreach ($value as $key=>$routed) {
             $path = $kernel->locateResource($routed['resource']);
+            $spath = substr($routed['resource'], 1);
+            $bundleName = explode('/', $spath)[0];
+            $shortName = $bundles[$bundleName]['short_name'];
             //foreach all files
             $files = $this->getDirectory($path,$path.DIRECTORY_SEPARATOR);
             foreach ($files as $conf) {
@@ -70,6 +74,7 @@ class SkimiaAngularExtension extends Extension
                         $route['prefix'] = $routed['prefix'];
                     }
                     $route['name'] = $name;
+                    $route['controller'] = $shortName.'.'.$route['controller'];
                     if(isset($config_routes[$name])){
                         throw new \Exception('Duplicate entry in routing Angular for key'.$name);
                     }

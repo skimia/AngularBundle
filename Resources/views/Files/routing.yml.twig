@@ -4,30 +4,30 @@
  
 {{bundle.shortName|lower}}_{{name|lower}}_list:
     pattern: /{{name|lower}}
-    controller: "{{bundle.shortName}}.{{name}}.ListController" 
+    controller: "{{name}}.ListController" 
     view: "@{{bundle.name}}:{{name}}:list.html.twig"
     title: "LIST {{name}}"
 
 {{bundle.shortName|lower}}_{{name|lower}}_create:
     pattern: /{{name|lower}}/new
-    controller: "{{bundle.shortName}}.{{name}}.CreateController" 
+    controller: "{{name}}.CreateController" 
     view: "@{{bundle.name}}:{{name}}:form.html.twig"
     title: "CREATE {{name}}"
     
 {{bundle.shortName|lower}}_{{name|lower}}_show:
     pattern: /{{name|lower}}/:{{name|lower}}Id
-    controller: "{{bundle.shortName}}.{{name}}.ShowController" 
+    controller: "{{name}}.ShowController" 
     view: "@{{bundle.name}}:{{name}}:show.html.twig"
     title: "SHOW {{name}} "
     
 {{bundle.shortName|lower}}_{{name|lower}}_edit:
     pattern: /{{name|lower}}/:{{name|lower}}Id/edit
-    controller: "{{bundle.shortName}}.{{name}}.EditController" 
+    controller: "{{name}}.EditController" 
     view: "@{{bundle.name}}:{{name}}:form.html.twig"
     title: "EDIT {{name}}"
     
 {{bundle.shortName|lower}}_{{name|lower}}_delete:
     pattern: /{{name|lower}}/:{{name|lower}}Id/delete
-    controller: "{{bundle.shortName}}.{{name}}.DeleteController" 
+    controller: "{{name}}.DeleteController" 
     view: "@{{bundle.name}}:{{name}}:show.html.twig"
     title: "DELETE {{name}}"

@@ -7,3 +7,7 @@ skimia_angular_get_partial:
 skimia_angular_get_app:
     pattern:  /app.js
     defaults: { _controller: SkimiaAngularBundle:Javascript:home }
+    
+skimia_angular_get_auth:
+    pattern:  /api/user
+    defaults: { _controller: SkimiaAngularBundle:Security:getAuth }

@@ -22,6 +22,7 @@ class AppGenerator extends FileGenerator {
             array('name'=> 'ngAnimate', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-animate.min.js'),
             array('name'=> 'message-center', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-flash.js'),
             array('name'=> 'multi-select', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-multi-select.js'),
+            array('name'=> 'skimia-auth', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/skimia-auth.js'),
             
             ));
 

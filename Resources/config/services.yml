@@ -34,3 +34,10 @@ services:
         class: Skimia\AngularBundle\Form\Type\MultiSelectType
         tags:
             - { name: form.type, alias: multiselect }
+    
+
+    authentication_handler:
+        class:  Skimia\AngularBundle\Handler\AuthenticationHandler
+        arguments:  [@router]
+        tags:
+             - { name: kernel.event_listener, event: kernel.event_listener, method: handle }

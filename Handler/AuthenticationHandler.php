@@ -59,7 +59,7 @@ implements AuthenticationSuccessHandlerInterface,
             /*$url = $this->router->generate('user_login');
             
             return new RedirectResponse($url);*/
-            return new Response(json_encode(array('error'=>$exception->getMessage())),401);
+            return new Response(json_encode(array('error'=>$exception->getMessage())),409);
         }
     }
     function handle(Request $request, AccessDeniedException $accessDeniedException){

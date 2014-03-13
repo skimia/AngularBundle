@@ -21,11 +21,11 @@ MultiSelectModule.directive('multiSelect',['$q','$timeout', function($q,$timeout
                 '<div class="large-2 columns">' + 
                   '<button style="width:100%" class="btn" ng-click="add()" title="Add selected" ' + 
                       'ng-disabled="selected.available.length == 0">' + 
-                    '<i class="fi-arrow-left"></i>' + 
+                    '<i class="fa fa-arrow-left"></i>' + 
                   '</button>' + 
                   '<button style="width:100%" class="btn" ng-click="remove()" title="Remove selected" ' + 
                       'ng-disabled="selected.current.length == 0">' + 
-                    '<i class="fi-arrow-right"></i>' + 
+                    '<i class="fa fa-arrow-right"></i>' + 
                   '</button>' +
                 '</div>' + 
                 '<div class="large-5 columns">' +

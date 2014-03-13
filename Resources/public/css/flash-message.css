@@ -1,5 +1,5 @@
 #mc-messages-wrapper {
-  z-index: 99;
+  z-index: 1600;
   position: fixed;
   display: inline-block;
   text-align: center;
@@ -7,7 +7,7 @@
   right: 30px;
 }
 #mc-messages-wrapper .alert-box{
-    opacity: 0.5;
+    opacity: 0.7;
     -moz-transition: all 0.2s;
     transition: all 0.2s;
 }
@@ -26,5 +26,5 @@
  
 .flash-animate.ng-leave,.flash-animate.ng-enter.ng-enter-active {
  /* The animation code itself */
- opacity: 0.5 !important;
+ opacity: 0.7 !important;
 }

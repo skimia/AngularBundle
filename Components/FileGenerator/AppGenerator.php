@@ -23,6 +23,8 @@ class AppGenerator extends FileGenerator {
             array('name'=> 'message-center', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-flash.js'),
             array('name'=> 'multi-select', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-multi-select.js'),
             array('name'=> 'skimia-auth', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/skimia-auth.js'),
+            array('name'=> 'ui.gravatar', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-gravatar.js'),
+            array('name'=> 'md5', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/md5.js'),
             
             ));
 

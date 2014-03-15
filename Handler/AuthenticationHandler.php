@@ -63,7 +63,8 @@ implements AuthenticationSuccessHandlerInterface,
         }
     }
     function handle(Request $request, AccessDeniedException $accessDeniedException){
-        die('401');
+        //die('401');
+        return new Response(json_encode(array('error'=>$accessDeniedException->getMessage())),401);
         // do something with your exception and return Response object (plain message of rendered template)
     }
 

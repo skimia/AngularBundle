@@ -15,18 +15,15 @@ class ResourceFormSubscriber implements EventSubscriberInterface
 
     public function preSubmit(FormEvent $event)
     {
-        
         $product = $event->getData();
         $form = $event->getForm();
-
         $fields = array_keys($product);
         foreach ($fields as $field) {
             if(!$form->has($field)){
                 $form->add($field, 'text',array(
                     'mapped'=>false
                 ));
-            }                                   
+            }                              
         }
-
     }
 }

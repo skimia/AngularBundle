@@ -6,9 +6,32 @@
 {# Make data available to current scope as $scope.data - will not work with hidden fields #}
 {% block widget_attributes %}
     {% spaceless %}
-        {% if block_prefixes.2 == 'entity'%}ng-change="data['{{ full_name }}'] = data['{{ full_name|underscore }}'].id" ng-model="data['{{ full_name|underscore }}'].id" ng-init="data['{{ full_name|underscore }}']= {}"{%else%}ng-model="data['{{ full_name }}']"{%endif%} {# we add Angular ng-model #}
-        id="{{ id }}" name="{{ full_name }}"{% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}
-        {% for attrname, attrvalue in attr %}{% if attrname in ['placeholder', 'title'] %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}" {% else %}{{ attrname }}="{{ attrvalue }}" {% endif %}{% endfor %}
+        {% if block_prefixes.2 == 'entity'%}
+            ng-model="data['{{ full_name|underscore }}'].id" 
+            ng-init="data['{{ full_name|underscore }}']= {}" 
+        {%else%}
+            ng-model="data['{{ full_name|underscore }}']"
+        {%endif%} {# we add Angular ng-model #}
+
+        id="{{ id }}" name="{{ full_name|underscore }}"
+
+        {% if read_only %} readonly="readonly"{% endif %}
+
+        {% if disabled %} disabled="disabled"{% endif %}
+
+        {% if required %} required="required"{% endif %}
+
+        {% if max_length %} maxlength="{{ max_length }}"{% endif %}
+
+        {% if pattern %} pattern="{{ pattern }}"{% endif %}
+
+        {% for attrname, attrvalue in attr %}
+            {% if attrname in ['placeholder', 'title'] %}
+                {{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}" 
+            {% else %}
+                {{ attrname }}="{{ attrvalue }}" 
+            {% endif %}
+        {% endfor %}
     {% endspaceless %}
 {% endblock widget_attributes %}
  

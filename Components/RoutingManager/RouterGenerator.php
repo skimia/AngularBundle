@@ -126,7 +126,7 @@ class RouterGenerator {
     }
 
     protected function upTree($name) {
-        $names = split('_', $name);
+        $names = explode ('_', $name);
         if (count($names) <= 1) {
             return false;
         }
@@ -138,7 +138,7 @@ class RouterGenerator {
         if(!$this->startsWith($name,'@')){
             return $name;
         }
-        $path_arr = split(':', str_replace('@', '', $name));
+        $path_arr = explode (':', str_replace('@', '', $name));
         $bundle_name = $path_arr[0];
         unset($path_arr[0]);
         $path = str_replace(array('.html.twig', '.html'), '', implode('/', $path_arr));

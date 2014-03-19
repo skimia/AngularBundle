@@ -30,6 +30,7 @@ angular.module('skimia-auth', ['http-auth-interceptor-buffer','message-center'])
                 success(function(data, status, headers, config) {
                     $rootScope.user = merge_options($rootScope.user,data);
                     $rootScope.user.authenticated = true;
+                    $rootScope.$broadcast('event:auth-loginConfirmed', data);
                 });
    }])
    .

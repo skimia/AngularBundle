@@ -20,11 +20,18 @@ class AppGenerator extends FileGenerator {
             array('name' => 'ui.router', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-ui-router.min.js'),
             array('name' => 'angular-loading-bar', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-loading-bar.min.js'),
             array('name'=> 'ngAnimate', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-animate.min.js'),
+            array('name'=> 'ngSanitize', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-sanitize.min.js'),
             array('name'=> 'message-center', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-flash.js'),
             array('name'=> 'multi-select', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-multi-select.js'),
-            array('name'=> 'skimia-auth', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/skimia-auth.js'),
+            array('name'=> 'skimia-auth', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-auth.js'),
             array('name'=> 'ui.gravatar', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-gravatar.js'),
-            array('name'=> 'md5', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/md5.js'),
+            array('name'=> 'angular-md5', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-md5.js'),
+            array('resource' => '@SkimiaAngularBundle/Resources/public/js/lib/prettify/prettify.js'),
+            array('resource' => '@SkimiaAngularBundle/Resources/public/js/lib/showdown.js'),
+            array('resource' => '@SkimiaAngularBundle/Resources/public/js/lib/showdown-modules/github.js'),
+            array('resource' => '@SkimiaAngularBundle/Resources/public/js/lib/showdown-modules/prettify.js'),
+            array('resource' => '@SkimiaAngularBundle/Resources/public/js/lib/showdown-modules/twitter.js'),
+            array('name'=> 'angular-markdown', 'resource' => '@SkimiaAngularBundle/Resources/public/js/lib/angular-markdown.js'),
             
             ));
 

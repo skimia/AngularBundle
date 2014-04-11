@@ -6,13 +6,13 @@
   top: 50px;
   right: 30px;
 }
-#mc-messages-wrapper .alert-box{
+#mc-messages-wrapper .alert{
     opacity: 0.7;
     -moz-transition: all 0.2s;
     transition: all 0.2s;
 }
 
-#mc-messages-wrapper .alert-box:hover{
+#mc-messages-wrapper .alert:hover{
     opacity: 1;
 }
 

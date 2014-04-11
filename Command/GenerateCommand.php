@@ -39,9 +39,13 @@ class GenerateCommand extends ContainerAwareCommand {
         $controllers = $this->getDirectory($path);
         foreach ($controllers as $controller) {
             $nsp = $namespace . '\\' . basename($controller, '.php');
-            $class = new $nsp();
-            if (is_a($class, '\FOS\RestBundle\Controller\FOSRestController')) {
-                $this->generateController($bundle, $class);
+            $ab_class = new \ReflectionClass($nsp);
+            if(!$ab_class->isAbstract())
+            {
+                $class = new $nsp();
+                if (is_a($class, '\FOS\RestBundle\Controller\FOSRestController')) {
+                    $this->generateController($bundle, $class);
+                }
             }
         }
     }
@@ -59,9 +63,9 @@ class GenerateCommand extends ContainerAwareCommand {
             $this->generateControllerJs($name, $directory . 'controllers' . DIRECTORY_SEPARATOR . $name . 'Controller.js.twig');
         }
         //Check service
-        if (!file_exists($directory . 'services' . DIRECTORY_SEPARATOR . $name . 'Factory.js.twig')) {
-            $this->_output->writeln('   > Generate Service ' . $name . 'Factory');
-            $this->generateFactoryJs($name, $directory . 'services' . DIRECTORY_SEPARATOR . $name . 'Factory.js.twig');
+        if (!file_exists($directory . 'services' . DIRECTORY_SEPARATOR . $name . 'Model.js.twig')) {
+            $this->_output->writeln('   > Generate Service ' . $name . 'Model');
+            $this->generateFactoryJs($name, $directory . 'services' . DIRECTORY_SEPARATOR . $name . 'Model.js.twig');
         }
         //Check Partials
         if (!file_exists($directory . 'partials' . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . 'form.html.twig')) {

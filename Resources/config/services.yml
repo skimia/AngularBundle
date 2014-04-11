@@ -36,6 +36,22 @@ services:
             - { name: form.type, alias: multiselect }
     
 
+    skimia_angular.data.manager:
+        class: Skimia\AngularBundle\Components\DataManager\DataManager
+        arguments: [@service_container]
+
+    skimia_angular.data.subscriber:
+        class: Skimia\AngularBundle\Handler\DataHandler
+        arguments: ["@skimia_angular.data.manager"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postDelete }
+
+    angular_translator_generator:
+        class: Skimia\AngularBundle\Components\Translation\AngularTranslatorGenerator
+        arguments:  [@service_container]
+
     authentication_handler:
         class:  Skimia\AngularBundle\Handler\AuthenticationHandler
         arguments:  [@router]

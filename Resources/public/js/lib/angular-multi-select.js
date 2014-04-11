@@ -11,24 +11,25 @@ MultiSelectModule.directive('multiSelect',['$q','$timeout', function($q,$timeout
       model: "=ngModel"
     },
     template: '<div class="row">' + 
-                '<div class="large-5 columns">' + 
+                '<div class="col-md-5 form-group">' + 
                   '<label class="control-label" for="multiSelectSelected">{{ selectedLabel }} ' +
                       '({{ model.length }})</label>' +
                   '<select id="multiSelectSelected" ng-model="selected.current" multiple ' + 
                       'class="pull-left" ng-options="e as e[displayAttr] for e in model">' + 
                       '</select>' + 
                 '</div>' + 
-                '<div class="large-2 columns">' + 
-                  '<button style="width:100%" class="btn" ng-click="add()" title="Add selected" ' + 
+                '<div class="col-md-2 form-group" style="display: table-cell;vertical-align: middle;">' + 
+                  '<label>&nbsp;</label>' +
+                  '<button style="width:100%;margin-bottom:10px;" class="btn btn-primary" ng-click="add()" title="Add selected" ' + 
                       'ng-disabled="selected.available.length == 0">' + 
                     '<i class="fa fa-arrow-left"></i>' + 
                   '</button>' + 
-                  '<button style="width:100%" class="btn" ng-click="remove()" title="Remove selected" ' + 
+                  '<button style="width:100%" class="btn btn-primary" ng-click="remove()" title="Remove selected" ' + 
                       'ng-disabled="selected.current.length == 0">' + 
                     '<i class="fa fa-arrow-right"></i>' + 
                   '</button>' +
                 '</div>' + 
-                '<div class="large-5 columns">' +
+                '<div class="col-md-5 form-group">' +
                   '<label class="control-label" for="multiSelectAvailable">{{ availableLabel }} ' +
                       '({{ available.length }})</label>' +
                   '<select id="multiSelectAvailable" ng-model="selected.available" multiple ' +

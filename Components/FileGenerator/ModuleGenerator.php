@@ -13,7 +13,7 @@ class ModuleGenerator extends FileGenerator {
             'module' => $this->generateModuleJavascript($options, $dependencies['dependencies']),
             'files' => $this->generateModuleFiles($options)
         ));
-        return $this->generateFile('SkimiaAngularBundle:JavaScript:module.js.twig', $options);
+        return $this->generateFile('SkimiaAngularBundle:Javascript:module.js.twig', $options);
     }
 
     protected function generateModuleJavascript($options, $deps) {

@@ -1,0 +1,24 @@
+<div id="login-holder">
+  <div class="modal-bg" ng-click="hideLogin()">
+  </div>
+  <div class="modal-container">
+    <div class="modal-dialog">
+      <form ng-submit="login()">
+        <div class="modal-header">
+          <h4>Contenu Protégé</h4>
+        </div>
+        <div class="modal-body">
+          <label for="ident">Username</label>
+          <input id="ident" type="text" ng-model="auth['ident']"/>
+          <label for="password">Password</label>
+          <input id="password" type="password" ng-model="auth['password']"/>
+          <label for="remember">Se souvenir de moi</label>
+          <input id="remember" type="checkbox" ng-model="auth['remember']"/>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="modal-submit"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

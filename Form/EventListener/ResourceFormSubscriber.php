@@ -22,7 +22,6 @@ class ResourceFormSubscriber implements EventSubscriberInterface
 
         $fields = array_keys($product);
         foreach ($fields as $field) {
-            if(!$form->has($field)){
                 if(is_array($product[$field])&& isset($product[$field]['id'])){
                     $product[$word->variablizeFilter($field)] = $product[$field]['id'];
                 }elseif(!$form->has($word->variablizeFilter($field))){
@@ -34,8 +33,8 @@ class ResourceFormSubscriber implements EventSubscriberInterface
                     $product[$word->variablizeFilter($field)] = $product[$field];
                 
                 }
-                unset($product[$field]);
-            }                              
+                if($field!= $word->variablizeFilter($field))
+                    unset($product[$field]);                             
         }
         $event->setData($product);
     }

@@ -15,7 +15,7 @@ class MultiSelectType extends AbstractType
         $transformer = new \Skimia\AngularBundle\Form\EventListener\MultiSelectFormSubscriber();
 
         // ajoute un champ texte normal, mais y ajoute aussi votre convertisseur
-        $builder->addEventSubscriber($transformer,999);
+        //$builder->addEventSubscriber($transformer,999);
     }
     public function buildView(FormView $view, FormInterface $form, array $options){
         $view->vars['property'] = $options['property'];

@@ -5,7 +5,7 @@ var MessageCenterModule = angular.module('message-center', []);
 
 // Define a service to inject.
 MessageCenterModule.
-  service('mc-service', ['$timeout',
+  service('$flash', ['$timeout',
     function ($timeout) {
       return {
         mcMessages: this.mcMessages || [],
@@ -21,7 +21,7 @@ MessageCenterModule.
           permanent: 'permanent'
         },
         add: function (type, message, options) {
-          var availableTypes = ['info', 'warning', 'success'],
+          var availableTypes = ['info', 'warning', 'success','danger'],
             service = this;
           options = options || {};
           if (availableTypes.indexOf(type) == -1) {
@@ -72,14 +72,14 @@ MessageCenterModule.
     }
   ]);
 MessageCenterModule.
-  directive('messageCenter', ['$rootScope', 'mc-service', function ($rootScope, messageCenterService) {
+  directive('messageCenter', ['$rootScope', '$flash', function ($rootScope, messageCenterService) {
     return {
       restrict: 'EA',
       template: '\
       <div id="mc-messages-wrapper">\
-        <div class="alert-box radius {{ message.type }} flash-animate" ng-repeat="message in mcMessages">\
-          {{ message.message }}\
-          <a class="close" ng-click="message.close();" data-dismiss="alert" aria-hidden="true">&times;</a>\
+        <div class="alert alert-{{ message.type }} flash-animate alert-dismissable" ng-repeat="message in mcMessages">\
+          <button type="button" class="close" ng-click="message.close();" data-dismiss="alert" aria-hidden="true">&times;</button>\
+          <span translate="{{message.message}}"></span>\
         </div>\
       </div>\
       ',

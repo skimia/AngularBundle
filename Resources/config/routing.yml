@@ -11,3 +11,9 @@ skimia_angular_get_app:
 skimia_angular_get_auth:
     pattern:  /api/user
     defaults: { _controller: SkimiaAngularBundle:Security:getAuth }
+
+skimia_angular_get_sync:
+    pattern:  "/api/sync/{time}"
+    defaults: { _controller: SkimiaAngularBundle:Data:getSync }
+    requirements:
+        time:  \d+

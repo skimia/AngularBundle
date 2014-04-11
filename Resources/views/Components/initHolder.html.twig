@@ -1,0 +1,98 @@
+<div id="init-holder" class="color blue">
+  <div class="init-container">
+    <div class="init-header">
+      <h1 class="animated fadeInDown">Skimia Project Manager</h1>
+      <p class="animated bounceIn phrase">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    </div>
+    <div class="init-main">
+      <div class="radial-progress" data-progress="79">
+        <div class="circle">
+          <div class="mask full">
+            <div class="fill"></div>
+          </div>
+          <div class="mask half">
+            <div class="fill"></div>
+            <div class="fill fix"></div>
+          </div>
+          <div class="shadow"></div>
+        </div>
+        <div class="inset">
+          <div class="percentage">
+              <div class="numbers">
+                <span>-</span><span>0%</span><span>1%</span><span>2%</span><span>3%</span><span>4%</span><span>5%</span><span>6%</span><span>7%</span><span>8%</span><span>9%</span><span>10%</span><span>11%</span><span>12%</span><span>13%</span><span>14%</span><span>15%</span><span>16%</span><span>17%</span><span>18%</span><span>19%</span><span>20%</span><span>21%</span><span>22%</span><span>23%</span><span>24%</span><span>25%</span><span>26%</span><span>27%</span><span>28%</span><span>29%</span><span>30%</span><span>31%</span><span>32%</span><span>33%</span><span>34%</span><span>35%</span><span>36%</span><span>37%</span><span>38%</span><span>39%</span><span>40%</span><span>41%</span><span>42%</span><span>43%</span><span>44%</span><span>45%</span><span>46%</span><span>47%</span><span>48%</span><span>49%</span><span>50%</span><span>51%</span><span>52%</span><span>53%</span><span>54%</span><span>55%</span><span>56%</span><span>57%</span><span>58%</span><span>59%</span><span>60%</span><span>61%</span><span>62%</span><span>63%</span><span>64%</span><span>65%</span><span>66%</span><span>67%</span><span>68%</span><span>69%</span><span>70%</span><span>71%</span><span>72%</span><span>73%</span><span>74%</span><span>75%</span><span>76%</span><span>77%</span><span>78%</span><span>79%</span><span>80%</span><span>81%</span><span>82%</span><span>83%</span><span>84%</span><span>85%</span><span>86%</span><span>87%</span><span>88%</span><span>89%</span><span>90%</span><span>91%</span><span>92%</span><span>93%</span><span>94%</span><span>95%</span><span>96%</span><span>97%</span><span>98%</span><span>99%</span><span>100%</span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="init-footer">
+      <p class="init-message animated flipInX"></p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+  function getPercent(){
+    var el = document.querySelector(".radial-progress");
+    return parseInt(el.getAttribute('data-progress'));
+  }
+  var setPhrase = function(){
+    var el = document.querySelector(".phrase");
+    var p = document.createElement("p");
+    p.setAttribute('class','animated bounceIn phrase');
+    var phrases = [
+    "On considère que les neuf dixièmes du code correspondent à environ 90% du temps de développement. Les 10% restant correspondent également à 90% du temps de développement - Tom Cargill",
+    "Vous ne pouvez pas comprendre la récursivité sans avoir d’abord compris la récursivité – Auteur Inconnu",
+    "J’ai toujours rêvé que mon ordinateur soit aussi simple à utiliser que mon téléphone. Ce rêve est devenu réalité : je ne comprends plus comment utiliser mon téléphone - Bjarne Stroustrup",
+    "Un ordinateur vous permet de faire plus de bêtises, beaucoup plus rapidement, que n’importe quelle autre invention dans l’histoire de l’humanité. À l’exception notable des armes à feu et de la tequila - Mitch Ratcliffe",
+    "Il y existe deux manières de concevoir un logiciel. La première, c’est de le faire si simple qu’il est évident qu’il ne présente aucun problème. La seconde, c’est de le faire si compliqué qu’il ne présente aucun problème évident. La première méthode est de loin la plus complexe - C.A.R. Hoare",
+    "Le fossé séparant théorie et pratique est moins large en théorie qu’il ne l’est en pratique - Auteur Inconnu",
+    "Si les ouvriers construisaient les bâtiments comme les développeurs écrivent leurs programmes, le premier pivert venu aurait détruit toute civilisation - Gerald Weinberg",
+    "Si debugger, c’est supprimer des bugs, alors programmer ne peut être que les ajouter - Edsger Dijkstra",
+    "Mesurer la progression du développement d’un logiciel à l’aune de ses lignes de code revient à mesurer la progression de la construction d’un avion à l’aune de son poids - Bill Gates",
+    "Neuf femmes ne peuvent pas faire un bébé en un mois - Fred Brooks",
+    "Aujourd’hui, la programmation est devenue une course entre le développeur, qui s’efforce de produire de meilleures applications à l’épreuve des imbéciles et l’univers, qui s’efforce de produire de meilleurs imbéciles. Pour l’instant, l’univers a une bonne longueur d’avance - Rich Cook",
+    "Les deux principales inventions sorties de Berkeley sont UNIX et le LSD. Difficile de croire à une quelconque coïncidence - Jeremy S. Anderson",
+    "Avant de vouloir qu’un logiciel soit réutilisable, il faudrait d’abord qu’il ait été utilisable - Ralph Johnson"
+
+    ];
+    var rand2 = Math.floor((Math.random()*phrases.length));
+    p.innerHTML = phrases[rand2];
+    el.parentElement.appendChild(p);
+    el.parentElement.removeChild(el);
+    if(getPercent() < 100){
+      setTimeout(setPhrase,10000);
+    }
+  }
+  setPhrase();
+  function setPercent($p){
+    $p = Math.round($p);
+    if($p > 100)
+      return;
+    var el = document.querySelector(".radial-progress");
+    el.setAttribute('data-progress', $p);
+    if($p == 100){
+      setTimeout(function() {
+        document.querySelector(".body").setAttribute('style', "display:block;");
+        document.querySelector("#init-holder").setAttribute('style', "display:none;");
+        document.querySelector("body").setAttribute('style', "");
+        
+      }, 1000);
+    }
+  }
+  function initPercent($p,$message){
+    setPercent($p);
+    var el = document.querySelector(".init-message");
+    el.setAttribute("class", "init-message animated flipOutX");
+    setTimeout(function() {
+      el.innerHTML = $message;
+      el.setAttribute("class", "init-message animated flipInX");
+    }, 500);
+    
+    
+  }
+  setInterval(function(){setPercent(getPercent()+1)},800);
+  initPercent(0,'Chargement de l\'application');
+  document.querySelector("#init-holder").setAttribute('style', "display:block;");
+  document.querySelector("body").setAttribute('style', "background-color:rgb(50,50,50);");
+</script>

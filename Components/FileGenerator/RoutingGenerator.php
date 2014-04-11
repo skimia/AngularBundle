@@ -10,7 +10,7 @@ class RoutingGenerator extends FileGenerator {
             'routes' => $this->getRoutes()
         ));
         
-        return $this->generateFile('SkimiaAngularBundle:JavaScript:states.js.twig', $options);
+        return $this->generateFile('SkimiaAngularBundle:Javascript:states.js.twig', $options);
     }
     
     private function getRoutes(){

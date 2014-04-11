@@ -26,7 +26,7 @@ class MainGenerator extends FileGenerator{
             'modules'=> $this->generateModules(),
             'app'=>$this->_appGenerator->generate(array())
         ));
-        return $this->generateFile('SkimiaAngularBundle:JavaScript:main.js.twig', $options);
+        return $this->generateFile('SkimiaAngularBundle:Javascript:main.js.twig', $options);
     }
     
     protected function generateModules(){

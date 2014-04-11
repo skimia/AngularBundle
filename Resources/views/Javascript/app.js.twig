@@ -11,4 +11,14 @@ angular.module('{{app_name()}}', [{% for dep in deps %}'{{dep|raw}}'{%if not loo
         function ($rootScope,   $state,   $stateParams) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-    }]);
+    }])
+    .config(function ($translateProvider) {
+    {{translations|raw}}
+
+    $translateProvider.preferredLanguage('{{app.request.locale}}');
+    });
+
+/* RELATIONS *************/
+{{ relations | raw}}
+/* FORMS *************/
+{{ forms | raw}}

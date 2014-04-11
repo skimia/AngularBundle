@@ -1,40 +1,43 @@
 
-{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ListController',['$scope','{{plurialise(name)}}',function($scope, {{plurialise(name)}}){
-	$scope.{{plurialise(name)|lower}} = {{plurialise(name)}}.query();
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ListController',['$scope','$repo','$flash',function($scope, $repo, $flash){
+    $repo.model('{{name}}').query(function(data){
+        $scope.{{plurialise(name)|lower}} = data;
+    });
 }]);
 
-{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ShowController',['$scope','$stateParams','{{plurialise(name)}}',function($scope, $stateParams, {{plurialise(name)}}){
-	$scope.{{name|lower}} = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.{{name|lower}}Id});
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.ShowController',['$scope','$stateParams','$repo','$flash',function($scope, $stateParams, $repo, $flash){
+	$repo.model('{{name}}').get($stateParams.{{name|lower}}Id, function(data){
+        $scope.{{name|lower}} = data;
+    });
+    $scope.delete = function(){
+        $repo.model('{{name}}').delete($stateParams.{{name|lower}}Id,function(){
+            $flash.add('success','Message success Delete');
+        });
+    }
 }]);
 
-{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.EditController',['$scope','$stateParams', '$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
-	$scope.data = {{plurialise(name)}}.get({ {{name|lower}}Id:$stateParams.{{name|lower}}Id});
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.EditController',['$scope','$stateParams', '$state','$repo','$flash',function($scope, $stateParams, $state, $repo,$flash){
+    $repo.model('{{name}}').get($stateParams.{{name|lower}}Id,function(data){
+        $scope.data = data.$beginEdit();         
+    });
+    $scope.submit = function(){
+        $scope.data.$save(function()
+        {
+            $state.go('^.show',{ {{name|lower}}Id:$scope.data.id},{'reload':true});
+            $flash.add('success','Message success Edit');
+        });
+    }
+}]);
+
+{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.CreateController',['$scope','$stateParams','$state','$repo','$flash',function($scope, $stateParams, $state, $repo, $flash){
+    $scope.data = $repo.model('{{name}}').$beginEdit();
         $scope.submit = function(){
-            $scope.data.$save(function()
+           $scope.data.$save(function(saved)
                 {
-                    $state.go('^.show',{Id:$scope.data.id},{'reload':true});
-                    flash.add('success','Message success Edit');
-                });
-        }
-}]);
-
-{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.CreateController',['$scope','$stateParams','$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
-	$scope.data = {}
-        $scope.submit = function(){
-           var saved = {{plurialise(name)}}.save($scope.data,function()
-                {
-                    $state.go('^.show',{Id:saved.id});
-                    flash.add('success','Message success Create');
+                    $state.go('^.show',{ {{name|lower}}Id:saved.id});
+                    $flash.add('success','Message success Create');
                 }
             );
         }
-}]);
-
-{{'{{module_var}}'}}.controller('{{'{{base_name}}'}}.DeleteController',['$scope','$stateParams','$state','{{plurialise(name)}}','mc-service',function($scope, $stateParams, $state, {{plurialise(name)}},flash){
-    {{plurialise(name)}}.delete({ {{name|lower}}Id:$stateParams.{{name|lower}}Id},function()
-                {
-                    $state.go('^.list');
-                    flash.add('success','Message success Delete');
-                });
 }]);
 

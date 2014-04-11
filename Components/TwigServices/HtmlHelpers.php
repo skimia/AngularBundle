@@ -34,6 +34,9 @@ class HtmlHelpers extends \Twig_Extension{
             'render_form' => new \Twig_Function_Method($this, 'renderForm',array(
                 'is_safe' => array('html')
             )),
+            'render_form_service' => new \Twig_Function_Method($this, 'renderFormService',array(
+                'is_safe' => array('html')
+            )),
         );
     }
     
@@ -57,6 +60,7 @@ class HtmlHelpers extends \Twig_Extension{
 		}
 		return '<script type="text/javascript" src="'.$url.'" ></script>';
     }
+
     public function moduleName($bundleName,$module,$concat = false){
         $bundleManager = $this->container->get('skimia_angular.bundle_manager');
         if($bundleManager->hasBundle($bundleName)){
@@ -68,7 +72,16 @@ class HtmlHelpers extends \Twig_Extension{
         }
         return $this->container->getParameter('skimia_angular.global_config')['app_name'];
     }
-    
+
+    public function renderFormService($formService){
+
+        $form =  $this->container->get('form.factory')->create($this->container->get($formService));
+        $form->add('save', 'submit');
+        return $this->container->get('templating')->render('SkimiaAngularBundle:Form:angularForm.html.twig',array(
+            'form' => $form->createView()
+        ));
+    }
+
     public function renderForm($bundle,$formType,$entity=true){
 
         return $this->container->get('templating')->render('SkimiaAngularBundle:Form:angularForm.html.twig',array(

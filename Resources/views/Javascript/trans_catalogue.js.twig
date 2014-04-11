@@ -1,0 +1,4 @@
+{% for locale, messages in catalogue %}
+   	$translateProvider.translations('{{locale}}', {{ messages|json_encode()|raw }}
+   	);
+{% endfor %}

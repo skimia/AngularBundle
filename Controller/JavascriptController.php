@@ -5,6 +5,9 @@ namespace Skimia\AngularBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Skimia\AngularBundle\Components\FileGenerator\MyJsMin;
+
+use Doctrine\ORM\Mapping\ClassMetadata;
+
 class JavascriptController extends Controller {
 
 
@@ -21,5 +24,6 @@ class JavascriptController extends Controller {
         return $response;
         
     }
+
 
 }

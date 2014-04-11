@@ -7,8 +7,8 @@
 {% block widget_attributes %}
     {% spaceless %}
         {% if block_prefixes.2 == 'entity'%}
-            ng-model="data['{{ full_name|underscore }}'].id" 
-            ng-init="data['{{ full_name|underscore }}']= {}" 
+            ng-model="data['{{ full_name|underscore }}'].id"
+            ng-init="data['{{ full_name|underscore }}'] = data['{{ full_name|underscore }}'] == null ? {} : data['{{ full_name|underscore }}']"
         {%else%}
             ng-model="data['{{ full_name|underscore }}']"
         {%endif%} {# we add Angular ng-model #}
@@ -44,7 +44,12 @@
         {% else %}
             {% set form_method = "POST" %}
         {% endif %}
-        <form name="{{ form.vars.name }}" ng-submit="submit()" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        <form 
+        ng-init="data = data == null ? {} : data"
+        name="{{ form.vars.name }}" 
+        ng-submit="submit()" 
+        method="{{ form_method|lower }}" 
+        action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
         {% if form_method != method %}
             <input type="hidden" name="_method" value="{{ method }}" />
         {% endif %}
@@ -56,7 +61,7 @@
     {% spaceless %}
             {% if not hide %}
             <multi-select 
-                ng-init="data.{{name}} = []"
+                ng-init="data.{{name}} = data.{{name}} == null ? [] : data.{{name}}"
                 ng-model="data.{{name}}" 
                 available="{{name}}" 
                 selected-label="{{label}} Actuels" 
@@ -72,3 +77,65 @@
             
     {% endspaceless %}
 {% endblock %}
+
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block checkbox_row %}
+{% spaceless %}
+    <div class="checkbox">
+        <label>
+        {{ form_widget(form) }}{{ form_label(form) }}
+        </label>
+    </div>
+{% endspaceless %}
+{% endblock checkbox_row %}
+
+{% block checkbox_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        {{ label|trans({}, translation_domain) }}
+    {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block button_widget %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button class="btn btn-success" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{% endspaceless %}
+{% endblock button_widget %}
+
+
+{% block choice_widget_options %}
+{% spaceless %}
+    {% for group_label, choice in options %}
+        {% if choice is iterable %}
+            <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                {% set options = choice %}
+                {{ block('choice_widget_options') }}
+            </optgroup>
+        {% else %}
+            <option  {% if block_prefixes.2 == 'entity'%}ng-selected="data['{{ full_name|underscore }}'].id == {{ choice.value }}" {% endif %}value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}
+{% endblock choice_widget_options %}

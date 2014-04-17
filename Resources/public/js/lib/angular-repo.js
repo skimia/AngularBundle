@@ -132,7 +132,7 @@ angular.module('angular-repo',['ng'])
 			if(this.hasResource(type,id)){
 				if(angular.isDefined(id)){
 
-					return this[type][id];
+					return that.model(type).entity(this[type][id]);
 				}else{
 					return this[type];
 				}
@@ -340,7 +340,10 @@ angular.module('angular-repo',['ng'])
 						OBJ.__id = _data.id;
 						angular.forEach(OBJ,function(value,key){
 							if(!angular.isDefined(skimia_forms[type][key]) && key !=='__type' && key !=='__form' && key !=='id' && key !=='__id'){
-								delete OBJ[key];
+								if(!angular.isDefined(skimia_forms[type][key.toCamel()])){
+									delete OBJ[key.toDash()];
+								}
+								//elete OBJ[key.toDash()];
 							}else if(key !=='__type' && key !=='__form' && key !=='__id'){
 								OBJ.__form.values[key] = _data[key];
 							}
@@ -552,21 +555,21 @@ angular.module('angular-repo',['ng'])
 		angular.forEach(data.__form,function(type,name){
 			if(type == 'multiselect'){
 				var ids = [];
-				angular.forEach(data[name], function(value,key){
+				angular.forEach(data[name.toDash()], function(value,key){
 					ids.push(value.id);
 				});
 				newData[name] = ids;
 			}
 			else if(type == 'entity'){
-				newData[name] = data[name].id;
+				newData[name] = data[name.toDash()].id;
 			}
 			else if(type == 'checkbox'){
 				if(data[name]){
-					newData[name] = data[name];
+					newData[name] = data[name.toDash()];
 				}
 			}
 			else{
-				newData[name] = data[name];
+				newData[name] = data[name.toDash()];
 			}
 		});
 		return newData;
@@ -688,10 +691,10 @@ angular.module('angular-repo',['ng'])
     };
     this.setUser(true);
 	this.connected = function(){
-		if(that.user.authenticated === false)
-			return false;
-		else
+		if($rootScope.user.authenticated === true)
 			return true;
+		else
+			return false;
 	};
 
 	this.logout = function(){
@@ -813,14 +816,7 @@ angular.module('angular-repo',['ng'])
         if(response.status === 400){
         	
         	if(response.data.message =="Validation Failed"){
-        		var errors = "<ol>";
-        		angular.forEach(response.data.errors.children,function(value,key){
-        			if(angular.isDefined(value.errors)){
-        				errors = errors + "<li>"+key+" : "+ value.errors.join(', ')+"</li>";
-        			}
-        		});
-        		errors = errors + "</ol>";
-        		$flash.add('danger',errors);
+        		$rootScope.$broadcast('event:error-formValidation', response.data.errors.children);
         	}
         }
         // otherwise, default behaviour
@@ -886,7 +882,17 @@ angular.module('angular-repo',['ng'])
         buffer = [];
       }
     };
-  }]);
+  }])
+.directive('formErrors', function($rootScope) {
+    return {
+    	restrict:'A',
+      	link : function(scope, element, attrs){
+      		$rootScope.$on('event:error-formValidation', function(event,error){
+        		scope.error = error;
+    		});
+      	}
+    };
+  });
 
 
 
@@ -930,3 +936,10 @@ function deepObjCopy (dupeObj,deepcheck) {
 	}
 	return retObj;
 }
+String.prototype.toDash = function(){
+	return this.replace(/([A-Z])/g, function($1){return "_"+$1.toLowerCase();});
+};
+
+String.prototype.toCamel = function(){
+	return this.replace(/(_[a-z])/g, function($1){return $1.toUpperCase().replace('_','');});
+};

@@ -1,5 +1,5 @@
 var MultiSelectModule = angular.module('multi-select', []);
-MultiSelectModule.directive('multiSelect',['$q','$timeout', function($q,$timeout) {
+MultiSelectModule.directive('multiSelect',['$q','$timeout','$repo', function($q,$timeout,$repo) {
   return {
     restrict: 'E',
     require: 'ngModel',
@@ -8,6 +8,7 @@ MultiSelectModule.directive('multiSelect',['$q','$timeout', function($q,$timeout
       availableLabel: "@",
       displayAttr: "@",
       available: "=",
+      modelEntity: "@",
       model: "=ngModel"
     },
     template: '<div class="row">' + 
@@ -41,6 +42,15 @@ MultiSelectModule.directive('multiSelect',['$q','$timeout', function($q,$timeout
         available: [],
         current: []
       };
+      $repo.model(scope.modelEntity).query(function(data){
+        var arr = [];
+
+        angular.forEach(data,function(value){
+          arr.push(value);
+        });
+        scope.available = arr;
+      });
+      
       /* Handles cases where scope data hasn't been initialized yet */
       var dataLoading = function(scopeAttr) {
         var loading = $q.defer();

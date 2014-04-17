@@ -146,6 +146,10 @@ class AppGenerator extends FileGenerator {
                         $forms[$key] = array();
                         foreach ($form->all() as $field) {
                             //die();
+                            //$field->getName() to underscore
+                            /*if($field->getName() == 'options_')
+                            debug($field->getConfig());
+                            die();*/
                             $forms[$key][$field->getName()] = $field->getConfig()->getType()->getName();
                         }
                     }
@@ -156,6 +160,13 @@ class AppGenerator extends FileGenerator {
 
     }
 
+    function decamelize($word) {
+  return preg_replace(
+    '/(^|[a-z])([A-Z])/e', 
+    'strtolower(strlen("\\1") ? "\\1_\\2" : "\\2")',
+    $word 
+  ); 
+}
     protected function getDirectory( $path = '.',$prefix='' ){ 
 
         $ignore = array( 'cgi-bin', '.', '..', 'module.js.twig','.svn' ); 

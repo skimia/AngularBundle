@@ -45,6 +45,7 @@
             {% set form_method = "POST" %}
         {% endif %}
         <form 
+        form-errors
         ng-init="data = data == null ? {} : data"
         name="{{ form.vars.name }}" 
         ng-submit="submit()" 
@@ -63,7 +64,8 @@
             <multi-select 
                 ng-init="data.{{name}} = data.{{name}} == null ? [] : data.{{name}}"
                 ng-model="data.{{name}}" 
-                available="{{name}}" 
+                model-entity="{{ repo_class }}" 
+                available="{{name}}"
                 selected-label="{{label}} Actuels" 
                 available-label="{{label}} Disponibles" 
                 display-attr="{{property}}">
@@ -80,10 +82,12 @@
 
 {% block form_row %}
 {% spaceless %}
-    <div class="form-group">
+    <div class="form-group has-feedback" ng-class="{'has-error': error.{{name}}.errors.length > 0}">
         {{ form_label(form) }}
         {{ form_errors(form) }}
         {{ form_widget(form) }}
+        <span class="fa fa-times-circle form-control-feedback" ng-if="error.{{name}}.errors.length > 0"></span>
+        <span class="help-block" ng-repeat="err in error.{{name}}.errors">{% verbatim%}{{err}}{%endverbatim%}</span>
     </div>
 {% endspaceless %}
 {% endblock form_row %}

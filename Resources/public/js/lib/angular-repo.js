@@ -339,21 +339,29 @@ angular.module('angular-repo',['ng'])
 						OBJ.__form.values = {};
 						OBJ.__id = _data.id;
 						angular.forEach(OBJ,function(value,key){
-							if(!angular.isDefined(skimia_forms[type][key]) && key !=='__type' && key !=='__form' && key !=='id' && key !=='__id'){
-								if(!angular.isDefined(skimia_forms[type][key.toCamel()])){
-									delete OBJ[key.toDash()];
-								}
-								//elete OBJ[key.toDash()];
-							}else if(key !=='__type' && key !=='__form' && key !=='__id'){
-								OBJ.__form.values[key] = _data[key];
+
+							if(key != key.toCamel()&& key !=='__type' && key !=='__form' && key !=='id' && key !=='__id'&& key!=='__repolastchange'){
+								OBJ[key.toCamel()] = OBJ[key];
+								delete OBJ[key];
+
+							}
+
+						});
+						newOBJ = {};
+						angular.forEach(skimia_forms[type] ,function(value,key){
+							if(angular.isDefined(OBJ[key.split('_')[0]])){
+								newOBJ[key.split('_')[0]] = OBJ[key.split('_')[0]];
 							}
 						});
-						OBJ.$save = function(callback){
-							return data.save(OBJ,callback);
+						newOBJ.__form = skimia_forms[type];
+						newOBJ.__id = _data.id;
+						newOBJ.id = _data.id;
+						newOBJ.$save = function(callback){
+							return data.save(newOBJ,callback);
 						}
 					}
 				}
-				return OBJ;
+				return newOBJ;
 			};
 			return _data;
 		}
@@ -553,23 +561,61 @@ angular.module('angular-repo',['ng'])
 	that.normaliseSave = function(data){
 		var newData = {};
 		angular.forEach(data.__form,function(type,name){
-			if(type == 'multiselect'){
-				var ids = [];
-				angular.forEach(data[name.toDash()], function(value,key){
-					ids.push(value.id);
-				});
-				newData[name] = ids;
-			}
-			else if(type == 'entity'){
-				newData[name] = data[name.toDash()].id;
-			}
-			else if(type == 'checkbox'){
-				if(data[name]){
-					newData[name] = data[name.toDash()];
+			console.log(name);
+			if(name != 'values'){
+				if(type == 'multiselect'){
+					var ids = [];
+					angular.forEach(data[name], function(value,key){
+						ids.push(value.id);
+					});
+					newData[name] = ids;
 				}
-			}
-			else{
-				newData[name] = data[name.toDash()];
+				else if(type == 'entity'){
+					newData[name] = data[name].id;
+				}
+				else if(type == 'checkbox'){
+					if(name.indexOf('_') > -1){
+						var split = name.split('_');
+						switch(split.length){
+							case 1:
+								data[name] = data[split[0]];
+								break;
+							case 2:
+								data[name] = data[split[0]][split[1]];
+								break;
+							case 3:
+								data[name] = data[split[0]][split[1]][split[2]];
+								break;
+						}
+						if(data[name]){
+							newData[name] = data[name];
+						}
+					}else{
+						if(data[name]){
+							newData[name] = data[name];
+						}
+					}
+					
+				}
+				else{
+					if(name.indexOf('_') > -1){
+						var split = name.split('_');
+						switch(split.length){
+							case 1:
+								newData[name] = data[split[0]];
+								break;
+							case 2:
+								newData[name] = data[split[0]][split[1]];
+								break;
+							case 3:
+								newData[name] = data[split[0]][split[1]][split[2]];
+								break;
+						}
+					}else{
+
+						newData[name] = data[name];
+					}
+				}
 			}
 		});
 		return newData;

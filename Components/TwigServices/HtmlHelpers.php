@@ -19,7 +19,10 @@ class HtmlHelpers extends \Twig_Extension{
     
     public function getFunctions() {
         return array(
-            'app_name' => new \Twig_Function_Method($this, 'appName'),
+            'data_form' => new \Twig_Function_Method($this, 'dataFormName'),
+            'app_name' => new \Twig_Function_Method($this, 'appName',array(
+                'is_safe' => array('html')
+            )),
             'module_name'=> new \Twig_Function_Method($this,'moduleName'),
             'plurialise'=> new \Twig_Function_Method($this,'plurialise'),
             'adapt_angular'=> new \Twig_Function_Method($this,'adaptName',array(
@@ -48,6 +51,10 @@ class HtmlHelpers extends \Twig_Extension{
      * Functions
     \******************************/
     
+    public function dataFormName($name){
+        $data = "data";
+        return 'data[\''.str_replace('_', "']['", $name).'\']';
+    }
     public function appName(){
         return $this->container->getParameter('skimia_angular.global_config')['app_name'];
     }

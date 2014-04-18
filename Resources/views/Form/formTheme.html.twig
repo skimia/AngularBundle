@@ -10,7 +10,7 @@
             ng-model="data['{{ full_name|underscore }}'].id"
             ng-init="data['{{ full_name|underscore }}'] = data['{{ full_name|underscore }}'] == null ? {} : data['{{ full_name|underscore }}']"
         {%else%}
-            ng-model="data['{{ full_name|underscore }}']"
+            ng-model="{{data_form(full_name)}}"
         {%endif%} {# we add Angular ng-model #}
 
         id="{{ id }}" name="{{ full_name|underscore }}"

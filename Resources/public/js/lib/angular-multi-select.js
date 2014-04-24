@@ -1,4 +1,29 @@
 var MultiSelectModule = angular.module('multi-select', []);
+MultiSelectModule.directive('singleSelect',['$repo',function($repo){
+  return{
+    restrict:'E',
+    scope:{
+      displayAttr: "@",
+      modelEntity: "@",
+      modelIf: "@",
+      modelIds: "@",
+      model: "=ngModel"
+    },
+    template: '<select ng-model="selected" ng-change="model = selected">'+
+    '<option ng-repeat="entity in available" ng-selected="model.id == entity.id" value="{{entity.id}}">{{entity[displayAttr]}}</option>'+
+    '</select>',
+    link : function(scope, elm, attrs){
+      $repo.model(scope.modelEntity).query(function(data){
+        var arr = [];
+
+        angular.forEach(data,function(value){
+          arr.push(value);
+        });
+        scope.available = arr;
+      });
+    }
+  }
+}]);
 MultiSelectModule.directive('multiSelect',['$q','$timeout','$repo', function($q,$timeout,$repo) {
   return {
     restrict: 'E',

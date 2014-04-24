@@ -74,6 +74,20 @@
             {% endif %}
     {% endspaceless %}
 {% endblock %}
+{% block singleselect_widget %}
+    {% spaceless %}
+            {% if not hide %}
+            <single-select 
+                {#ng-init="data.{{name}} = data.{{name}} == null ? [] : data.{{name}}"#}
+                ng-model="data.{{name}}" 
+                model-ids="data.{{ name }}" 
+                model-entity="{{ repo_class }}" 
+                display-attr="{{property}}">
+
+            </single-select>
+            {% endif %}
+    {% endspaceless %}
+{% endblock %}
 {% block multiselect_label %}
     {% spaceless %}
             

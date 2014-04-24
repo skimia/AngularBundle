@@ -36,6 +36,12 @@ services:
             - { name: form.type, alias: multiselect }
     
 
+    skimia_angular.form.type.singleselect:
+        class: Skimia\AngularBundle\Form\Type\SingleSelectType
+        tags:
+            - { name: form.type, alias: singleselect }
+    
+
     skimia_angular.data.manager:
         class: Skimia\AngularBundle\Components\DataManager\DataManager
         arguments: [@service_container]

@@ -2,6 +2,16 @@ angular.module('angular-repo',['ng'])
 .service('$repo', function($http, $injector, $q, $auth,$rootScope){
 
 	var that = this;
+	that.getRelations = function(entity){
+		var array = [];
+		angular.forEach(skimia_bdd_relations, function(relation){
+			if(relation.entity_a == entity)
+				array.push(relation.field_a);
+			if(relation.entity_b == entity)
+				array.push(relation.field_b);
+		});
+		return array;
+	};
 	that.repository = {
 		arrangeRelations: function(){
 
@@ -127,6 +137,32 @@ angular.module('angular-repo',['ng'])
 
 
 			});
+
+			/*angular.forEach(that.repository,function(list,repo){
+				if(that.hasModel(repo)){
+					angular.forEach(list,function(model,id){
+						var relations = that.getRelations(repo);
+						angular.forEach(relations,function(r){
+	
+							if(angular.isDefined(model[r])){
+							
+								if(angular.isArray(model[r])){
+									var array = [];
+									angular.forEach(model[r], function(model_value){
+										array.push(that.repository[model_value.__type][model_value.id]);
+									});
+									model[r] = array;
+								}
+								else{
+									model[r] = that.repository[model[r].__type][model[r].id];
+								}
+							}
+						});
+						that.repository[repo][id] = model;
+					});
+					
+				}
+			});*/
 		},
 		getResource : function(type,id){
 			if(this.hasResource(type,id)){
@@ -151,8 +187,10 @@ angular.module('angular-repo',['ng'])
 		addResources : function(array, model){
 			if(array.length != null){
 				angular.forEach(array,function(entity){
-
-					that.repository.addResource( model,entity.id,entity);
+					if(angular.isDefined(entity.id))
+						that.repository.addResource( model,entity.id,entity);
+					else
+						that.repository.addResource( model,entity.commit.author.date,entity);
 				});
 			}else{
 				throw new Error("InvalidParameter");
@@ -168,8 +206,10 @@ angular.module('angular-repo',['ng'])
 			}
 
 			data.__repolastchange = new Date().getTime();
-
-			that.repository[type][id] = data;
+			if(angular.isDefined(that.repository[type][id]))
+				that.repository[type][id] = angular.extend(that.repository[type][id], data);
+			else
+				that.repository[type][id] = data;
 			angular.forEach(data,function(value){
 				//Single
 				if(angular.isDefined(value) && value != null)
@@ -318,6 +358,11 @@ angular.module('angular-repo',['ng'])
 				var OBJ  = {}
 				OBJ.__form = skimia_forms[data.$type];
 				OBJ.__form.values = {};
+				angular.forEach(skimia_forms[data.$type],function(value,key){
+					if(key.split('_').length > 1){
+						OBJ[key.split('_')[0]] = [];
+					}
+				});
 				OBJ.$save = function(callback){
 					return data.save(OBJ,callback);
 				};
